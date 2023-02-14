@@ -18,6 +18,8 @@ gem 'devise-jwt'
 
 gem 'rack-cors'
 
+gem 'coingate'
+
 gem 'jsonapi-serializer'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

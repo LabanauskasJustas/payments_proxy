@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   get '/current_user', to: 'current_user#index'
+
+  namespace :api do
+    namespace :v1 do
+      resource :orders, only: [:create, :show, :destroy]
+    end
+  end
+
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',

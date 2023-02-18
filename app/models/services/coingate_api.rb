@@ -2,7 +2,7 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 
-class CoingateApi
+class Services::CoingateApi
   class Client
 
     def initialize

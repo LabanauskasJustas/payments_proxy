@@ -1,7 +1,7 @@
 module Api
   module V1
     class ApplicationController < ActionController::API
-      skip_before_action :verify_authenticity_token
+      skip_before_action :verify_authenticity_token unless Rails.env.production?
       before_action :authenticate!
 
       def authenticate!

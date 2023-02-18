@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :orders, only: [:create, :show, :destroy]
+      resources :orders, param: :payment_id, only: [:index, :show, :create, :destroy]
     end
   end
 

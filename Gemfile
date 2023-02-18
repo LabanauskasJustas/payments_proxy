@@ -20,6 +20,8 @@ gem 'rack-cors'
 
 gem 'coingate'
 
+gem 'acts_as_paranoid'
+
 gem 'jsonapi-serializer'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

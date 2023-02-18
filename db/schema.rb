@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_07_190902) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_18_185903) do
   create_table "orders", force: :cascade do |t|
     t.string "order_id"
     t.string "status"
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_190902) do
     t.datetime "updated_at", null: false
     t.text "TransactionHash"
     t.integer "user_id"
+    t.integer "payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

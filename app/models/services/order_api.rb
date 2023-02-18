@@ -51,7 +51,7 @@ class Services::OrderApi
 
   def coingate_config
     CoinGate.config do |config|
-      config.auth_token  = Rails.application.credentials.coingate.fetch(:api_key) || ENV['COINGATE_SECRET']
+      config.auth_token  = ENV['COINGATE_SECRET'] || Rails.application.credentials.coingate.fetch(:api_key) 
       config.environment = Rails.env.production? ? 'live' : 'sandbox'
     end.freeze
   end

@@ -61,7 +61,7 @@ module Services
     def coingate_config
       CoinGate.config do |config|
         config.auth_token  = ENV['COINGATE_SECRET'] || Rails.application.credentials.coingate.fetch(:api_key)
-        config.environment = Rails.env.production? ? 'live' : 'sandbox'
+        config.environment = 'sandbox'
       end.freeze
     end
 

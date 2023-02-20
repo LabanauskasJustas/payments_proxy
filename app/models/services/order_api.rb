@@ -28,8 +28,7 @@ module Services
           description: @request_body.fetch('description') || 'Blank'
         }
       )
-      order_payment ||= CoinGate::Merchant::Order.create!(@order.TransactionHash)
-      if order_payment
+      if order_payment ||= CoinGate::Merchant::Order.create!(@order.TransactionHash)
         @order.TransactionHash.update(payment_url: order_payment.payment_url)
         @order.update!(
           amount: order_payment.price_amount,
@@ -47,8 +46,8 @@ module Services
       @order.cancel unless @invoice_order.status == 'cancelled'
     end
 
-    def find_order(payment_id)
-      @order = @current_user.orders.find_by_payment_id(payment_id)
+    def find_order(order_id)
+      @order = @current_user.orders.find_by_order_id(order_id)
       @invoice_order = coingate_order(@order.payment_id)
       unless @invoice_order.status == @order.status
         @order.update(status: @invoice_order.status)
@@ -70,7 +69,7 @@ module Services
     end
 
     def endpoint
-      'https://payment-proxy.herokuapp.com/'
+      'https://payment-proxy.herokuapp.com/api/v1/'
     end
   end
 end

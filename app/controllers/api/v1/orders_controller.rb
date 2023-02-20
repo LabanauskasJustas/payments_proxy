@@ -10,13 +10,9 @@ module Api
         @orders = current_user.orders
       end
 
-      # api :GET, "/orders/:id", "Gets an order"
-      param :id, Integer, desc: 'Order ID', required: true
       def show
       end
 
-      # api :POST, "/orders", "Create an order"
-      # param_group :order
       def create
         body = JSON.parse(request.body.read).with_indifferent_access
         @order ||= Services::OrderApi.new(request_body: body, order_user: current_user).save_order
@@ -39,7 +35,7 @@ module Api
 
       def find_order
         @errors = []
-        @order = Services::OrderApi.new(order_user: current_user).find_order(params[:payment_id])
+        @order = Services::OrderApi.new(order_user: current_user).find_order(params.fetch(:order_id))
         raise NoMethodError if @order.nil?
       rescue NoMethodError
         @errors << 'Order not found'

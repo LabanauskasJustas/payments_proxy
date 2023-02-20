@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
+  apipie
   get '/current_user', to: 'current_user#index'
 
   namespace :api do
     namespace :v1 do
-      resources :orders, param: :payment_id, only: [:index, :show, :create, :destroy]
+      resources :orders, param: :payment_id, only: %i[index show create destroy]
+      get '/orders/:payment_id/transactions', to: 'orders#cancel'
     end
   end
 

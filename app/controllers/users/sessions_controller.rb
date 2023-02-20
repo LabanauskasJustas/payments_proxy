@@ -1,28 +1,34 @@
 # frozen_string_literal: true
 
-class Users::SessionsController < Devise::SessionsController
-  include RackSessionFix
-  respond_to :json
-  private
+module Users
+  class SessionsController < Devise::SessionsController
+    include RackSessionFix
+    respond_to :json
 
-  def respond_with(resource, _opts = {})
-    render json: {
-      status: {code: 200, message: 'Logged in sucessfully.'},
-      data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-    }, status: :ok
-  end
+    private
 
-  def respond_to_on_destroy
-    if current_user
+    def respond_with(resource, _opts = {})
       render json: {
-        status: 200,
-        message: "logged out successfully"
+        status: { code: 200, message: 'Logged in sucessfully.' },
+        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
       }, status: :ok
-    else
+    end
+
+    def respond_to_on_destroy
+      if current_user
+        session_response({ code: 200, message: "Logged out successfully", status: :ok })
+      else
+        session_response({ code: 401, message: "Couldn't find an active session.", status: :unauthorized })
+      end
+    end
+
+    private
+    
+    def session_response(response_params = {})
       render json: {
-        status: 401,
-        message: "Couldn't find an active session."
-      }, status: :unauthorized
+        status: response_params.fetch(:code),
+        message: response_params.fetch(:message)
+      }, status: response_params.fetch(:status)
     end
   end
 end

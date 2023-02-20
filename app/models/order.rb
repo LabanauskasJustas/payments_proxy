@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Order < ApplicationRecord
   acts_as_paranoid
 
@@ -6,6 +8,7 @@ class Order < ApplicationRecord
   serialize :TransactionHash, Hash
 
   def cancel
-    update_attribute(status: "cancelled")
+    update(status: 'cancelled')
+    touch :canceled_at
   end
 end

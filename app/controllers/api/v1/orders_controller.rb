@@ -4,7 +4,7 @@ module Api
   module V1
     class OrdersController < ApplicationController
       before_action :authenticate_user!, :json_params
-      before_action :find_order, only: %i[show destroy index]
+      before_action :find_order, only: %i[show destroy]
 
       def index
         @orders = current_user.orders

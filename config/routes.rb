@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :orders, param: :order_id, only: %i[index show create destroy]
+      get '/orders', to: 'orders#index'
+      resources :orders, param: :order_id, only: %i[show create destroy], except: :index
       get '/orders/:payment_id/transactions', to: 'orders#cancel'
     end
   end
